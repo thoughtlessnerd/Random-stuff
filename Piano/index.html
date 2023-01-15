@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano</title>
+    <style>
+        *
+        {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body
+        {
+            background-color: cornflowerblue;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        div.piano
+        {
+            position: relative;
+            display: flex;
+            height: 300px;
+            width: 800px;
+            background-color: yellowgreen;
+            overflow: hidden;
+        }
+
+        div.key
+        {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+
+        div.key.b
+        {
+            display: flex;
+            position: absolute;
+            width: calc(100%/14);
+            background-color: #000;
+            height: 60%;
+            top: 0;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="piano">
+        <div class="key b"></div>
+        <div class="key b"></div>
+        <div class="key b"></div>
+        <div class="key b"></div>
+        <div class="key b"></div>
+        <div class="key W"></div>
+        <div class="key W"></div>
+        <div class="key W"></div>
+        <div class="key W"></div>
+        <div class="key W"></div>
+        <div class="key W"></div>
+        <div class="key W"></div>
+    </div>
+</body>
+<script src="./script.js"></script>
+</html>
