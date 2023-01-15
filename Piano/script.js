@@ -1,76 +1,107 @@
-const keyCount = 7; // since its just an octave
+const softKeyCount = 7; // since its just an octave
+const sharpKeyCount = 5;
+const sharpArr = [1, 2, 4, 5, 6]; // to set after how many keys will the next sharp key will be placed
 const softOctaves = [];
-const alpha = 'abcdefghijklmnopqrstuvwxyz';
-const keys = ["D", "F", "G", "H", "J", "K", "L"];
+const sharpOctaves = [];
+const alpha = 'abcdefghijklmnopqrstuvwxyz'; // names of the files are a1 b1 c1 and all so using this to iterate over them
+const softKeyBinds = ["D", "F", "G", "H", "J", "K", "L"];
+const sharpKeyBinds = ["R", "T", "U", "I", "O"];
+const softKeys = document.querySelectorAll('div.W');
+const sharpKeys = document.querySelectorAll('div.b');
 
 function setupSharpKeys()
 {
     const sharpKeys = document.querySelectorAll("div.b");
-    const sharpArr = [1, 2, 4, 5, 6];
     let sharpCount = 0;
     
     sharpKeys.forEach(elem => {
-        elem.style.left = `${(100/keyCount)*sharpArr[sharpCount]}%`;
+        elem.style.left = `${(100/softKeyCount)*sharpArr[sharpCount]}%`;
         sharpCount++;
     });
 }
 
 function assignAudios()
 {
-    const softKeys = document.querySelectorAll('div.W');
     for(let i = 0; i < softKeys.length; i++)
     {
         softKeys[i].addEventListener('mousedown', (e) => {
             softOctaves[i].currentTime = 0;
             softOctaves[i].play();
-            console.log('played');
+            softKeys[i].classList.add('active');
         })
         softKeys[i].addEventListener('mouseup', (e) => {
             softOctaves[i].pause();
-            console.log('paused');
+            softKeys[i].classList.remove('active');
+        })
+    }
+
+    for(let i = 0; i < sharpKeys.length; i++)
+    {
+        sharpKeys[i].addEventListener('mousedown', (e) => {
+            sharpOctaves[i].currentTime = 0;
+            sharpOctaves[i].play();
+            sharpKeys[i].classList.add('active');
+        })
+        sharpKeys[i].addEventListener('mouseup', (e) => {
+            sharpOctaves[i].pause();
+            sharpKeys[i].classList.remove('active');
         })
     }
 }
 
 function loadAudios()
 {
-    for(let i = 0; i < keyCount; i++)
+    for(let i = 0; i < softKeyCount; i++)
     {
         softOctaves.push(new Audio(`./wav/${alpha[i]}1.wav`));
+        if(i < sharpKeyCount)
+        {
+            sharpOctaves.push(new Audio(`./wav/${alpha[sharpArr[i]]}1s.wav`));
+        }
     }
 }
 
 function assignKeys()
 {
     document.addEventListener('keydown', (e) => {
-        switch(e.key.toUpperCase())
+        let index = softKeyBinds.indexOf(e.key.toUpperCase());
+        if(index == -1)
         {
-            case keys[0]:
-                softOctaves[0].currentTime = 0;
-                softOctaves[0].play();
-            case keys[1]:
-                softOctaves[1].currentTime = 0;
-                softOctaves[1].play();
-            case keys[2]:
-                softOctaves[2].currentTime = 0;
-                softOctaves[2].play();
-            case keys[3]:
-                softOctaves[3].currentTime = 0;
-                softOctaves[3].play();
-            case keys[4]:
-                softOctaves[4].currentTime = 0;
-                softOctaves[4].play();
-            case keys[5]:
-                softOctaves[5].currentTime = 0;
-                softOctaves[5].play();
-            case keys[6]:
-                softOctaves[6].currentTime = 0;
-                softOctaves[6].play();
+            index = sharpKeyBinds.indexOf(e.key.toUpperCase());
+            if(index == -1) return;
+            sharpOctaves[index].currentTime = 0;
+            sharpOctaves[index].play();
+            sharpKeys[index].classList.add('active');
         }
-        // console.log('pressed ' + e.key)
+        else
+        {
+            softKeys[index].classList.add('active');
+            softOctaves[index].currentTime = 0;
+            softOctaves[index].play();
+        }
+    })
+
+    document.addEventListener('keyup', (e) => {
+        let index = softKeyBinds.indexOf(e.key.toUpperCase());
+        if(index == -1)
+        {
+            index = sharpKeyBinds.indexOf(e.key.toUpperCase());
+            if(index == -1) return;
+            sharpKeys[index].classList.remove('active');
+        }
+        else
+        {
+            softKeys[index].classList.remove('active');
+        }
     })
 }
 
-setupSharpKeys();
-loadAudios();
-assignAudios();
+function intialization()
+{
+    setupSharpKeys();
+    loadAudios();
+    assignAudios();
+    assignKeys();
+}
+
+intialization();

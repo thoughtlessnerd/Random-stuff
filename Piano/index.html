@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;500;700;900&family=Poppins:wght@600&display=swap" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Piano</title>
@@ -15,11 +18,13 @@
         
         body
         {
-            background-color: cornflowerblue;
+            background-color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            flex-direction: column;
+            gap: 200px;
         }
 
         div.piano
@@ -28,7 +33,8 @@
             display: flex;
             height: 300px;
             width: 800px;
-            background-color: yellowgreen;
+            box-shadow:  20px 20px 60px #d9d9d9,
+                         -20px -20px 60px #ffffff;
             overflow: hidden;
         }
 
@@ -51,9 +57,49 @@
             top: 0;
             transform: translateX(-50%);
         }
+
+        div.key.active
+        {
+            box-shadow: 0px 0px 15px inset #ccc;
+            border: 1px solid inset #ccc;
+        }
+
+        div.key.b.active
+        {
+            box-shadow: 0px 0px 15px inset #777;
+        }
+
+        div.instructions
+        {
+            border-radius: 50px;
+            height: 200px;
+            width: 600px;
+            padding: 45px 80px;
+            font-size: 20px;
+            text-align: center;
+            color: #a8a8a8;
+            background: linear-gradient(145deg, #fff, #e6e6e6);
+            box-shadow:  20px 20px 60px #d9d9d9,
+                        -20px -20px 60px #ffffff;
+            line-height: 35px;
+            font-family: sofia;font-family: 'Inter', sans-serif;
+            /* font-family: 'Poppins', sans-serif; */
+        }
+
+        kbd
+        {
+            background-color: #a3a3a3;
+            color: #fff;
+            padding: 0px 5px;
+        }
     </style>
 </head>
 <body>
+    <div class="instructions">
+        Use keys <kbd>D</kbd> through to <kbd>L</kbd> for the white keys and
+        <kbd>E</kbd>, <kbd>R</kbd>, <kbd>U</kbd>, <kbd>I</kbd> and <kbd>O</kbd> for the black keys.
+        Enjoy :)
+    </div>
     <div class="piano">
         <div class="key b"></div>
         <div class="key b"></div>
