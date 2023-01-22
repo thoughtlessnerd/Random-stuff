@@ -59,11 +59,12 @@ function assignKeys() {
         let index = softKeyBinds.indexOf(e.key.toUpperCase());
         if (index == -1) {
             index = sharpKeyBinds.indexOf(e.key.toUpperCase());
-            if (index == -1) return;
+            if (index == -1 || sharpOctaves[index].currentTime !== 0) return;
             sharpOctaves[index].currentTime = 0;
             sharpOctaves[index].play();
             sharpKeys[index].classList.add("active");
         } else {
+            if (softOctaves[index].currentTime !== 0) return;
             softKeys[index].classList.add("active");
             softOctaves[index].currentTime = 0;
             softOctaves[index].play();
@@ -76,8 +77,12 @@ function assignKeys() {
             index = sharpKeyBinds.indexOf(e.key.toUpperCase());
             if (index == -1) return;
             sharpKeys[index].classList.remove("active");
+            sharpOctaves[index].pause();
+            sharpOctaves[index].currentTime = 0;
         } else {
+            softOctaves[index].pause();
             softKeys[index].classList.remove("active");
+            softOctaves[index].currentTime = 0;
         }
     });
 }
