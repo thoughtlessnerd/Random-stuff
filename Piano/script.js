@@ -9,6 +9,9 @@ const softKeyBinds = ["D", "F", "G", "H", "J", "K", "L"];
 const sharpKeyBinds = ["R", "T", "U", "I", "O"];
 const softKeys = document.querySelectorAll("div.W");
 const sharpKeys = document.querySelectorAll("div.b");
+const frequencyMap = {
+    0: { c: 16.35, "c#": 17.32, D: 18.35 },
+};
 
 function setupSharpKeys() {
     const sharpKeys = document.querySelectorAll("div.b");

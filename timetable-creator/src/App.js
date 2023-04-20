@@ -1,26 +1,26 @@
 import "./App.css";
-import { Chart } from "react-google-charts";
+import Timetable from "./components/Timetable.js";
+
+let timetableData = [
+    ["tasks", "time"],
+    ["sleep", 2],
+    ["stydy", 2],
+];
 
 function App() {
     return (
-        <Chart
-            chartType="PieChart"
-            width="100%"
-            height="400px"
-            data={data}
-            options={options}
-        />
+        <>
+            <Timetable
+                width="900px"
+                height="900px"
+                options={options}
+                label="AM"
+                data={timetableData}
+                style={{ padding: 0 }}
+            />
+        </>
     );
 }
-
-const data = [
-    ["Task", "Hours per Day", "tooltip"],
-    ["Work", 2, "2 hr"],
-    ["Eat", 2, "2 hr"],
-    ["Commute", 2, "2 hr"],
-    ["Watch TV", 2, "2 hr"],
-    ["Sleep", 4, "2 hr"], // CSS-style declaration
-];
 
 const options = {
     pieHole: 0.8,
@@ -29,7 +29,6 @@ const options = {
     pieSliceText: "none",
     tooltip: {
         isHtml: true,
-        text: "value",
     },
 };
 

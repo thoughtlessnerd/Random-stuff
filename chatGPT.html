@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Chat GPT</title>
+</head>
+<body>
+    <input>
+    <p></p>
+</body>
+<script>
+    const myAPIKEY = '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';
+    // Define the API endpoint and authorization token
+    const apiUrl = 'https://api.openai.com/v1/engines/davinci-codex/completions';
+    const apiToken = 'ysk-GsM4pQqXWUV6P8a1ftGCT3BlbkFJJPo9yBeZbPIt9ncC5204';
+    
+    // Define a function to generate text using the ChatGPT API
+    async function generateText(prompt) {
+        // Define the API request body
+        const requestBody = {
+            'prompt': prompt,
+            'max_tokens': 50,
+            'n': 1,
+            'stop': '\n',
+        };
+        
+        // Send the API request and wait for the response
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiToken}`,
+            },
+            body: JSON.stringify(requestBody),
+        });
+        
+        // Parse the response JSON and return the generated text
+        const data = await response.json();
+        return data.choices[0].text.trim();
+    }
+    
+    // Call the generateText function with a prompt and display the result
+    generateText('Hello, ChatGPT!').then(text => console.log(text));
+    
+</script>
+</html>
