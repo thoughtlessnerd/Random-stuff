@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color pallete adder</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+
+      input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-right: 10px;
+      }
+
+      button {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #eee;
+        cursor: pointer;
+      }
+
+      .colors {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+
+      .colors > div {
+        width: 200px;
+        height: 200px;
+        margin: 10px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      .colors > div > span {
+        display: block;
+        text-align: center;
+        color: transparent;
+        background-color: #fff;
+        font-size: 24px;
+        opacity: 0;
+        -webkit-background-clip: text;
+        mix-blend-mode: overlay;
+        transition: opacity 0.2s ease-in-out;
+      }
+
+      .colors > div > span.remove {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 18px;
+        background-color: #fff;
+        color: transparent;
+        -webkit-background-clip: text;
+        mix-blend-mode: overlay;
+        padding: 5px;
+        transform: rotateZ(45deg);
+        font-weight: 900;
+        opacity: 0;
+        transition: opacity 0.2s ease-in-out;
+      }
+
+      .colors > div:hover > span {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" name="color-hex" placeholder="hex code: #000" />
+    <button class="add-color">Add color</button>
+    <div class="colors"></div>
+  </body>
+
+  <script>
+    const addColor = document.querySelector(".add-color");
+    const colorHex = document.querySelector("input[name='color-hex']");
+    const colors = window.localStorage.getItem("colors")
+      ? window.localStorage.getItem("colors").split(",")
+      : [];
+
+    refreshColors();
+
+    addColor.addEventListener("click", () => {
+      const color = colorHex.value;
+      colors.push(color);
+
+      refreshColors();
+    });
+
+    function refreshColors() {
+      const colorsDiv = document.querySelector(".colors");
+      colorsDiv.innerHTML = "";
+
+      colors.forEach((color) => {
+        const colorDiv = document.createElement("div");
+        colorDiv.style.backgroundColor = color;
+        colorDiv.style.cursor = "pointer";
+
+        const colorSpan = document.createElement("span");
+        colorSpan.innerText = color;
+        colorDiv.appendChild(colorSpan);
+
+        const removeSpan = document.createElement("span");
+        removeSpan.innerText = "+";
+        removeSpan.classList.add("remove");
+        colorDiv.appendChild(removeSpan);
+
+        removeSpan.addEventListener("click", () => {
+          colors.splice(colors.indexOf(color), 1);
+          refreshColors();
+        });
+
+        colorDiv.addEventListener("click", () => {
+          navigator.clipboard.writeText(color);
+        });
+
+        colorsDiv.appendChild(colorDiv);
+      });
+
+      window.localStorage.setItem("colors", colors.join(","));
+    }
+  </script>
+</html>
